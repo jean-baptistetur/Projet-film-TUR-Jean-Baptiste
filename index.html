@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <title>CinéScope</title>
+
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-  <header class="header">
-    <h1>CinéScope</h1>
-  </header>
+<header class="header">
+  <h1><i class="fa-solid fa-film"></i> CinéScope</h1>
+</header>
 
-  <main class="container">
-    <p>Bienvenue sur ton mini site cinéma</p>
+<main class="container">
+  <div class="tabs">
+    <button class="tab active">Films</button>
+  </div>
 
-    <a class="btn" href="detail.html?id=1">
-      Voir un film
-    </a>
-  </main>
+  <div id="movies" class="grid"></div>
+</main>
 
-  <footer class="footer">
-    <p>© 2026</p>
-  </footer>
+<script src="js/api.js"></script>
+<script src="js/home.js"></script>
 
 </body>
 </html>
