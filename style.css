@@ -1,85 +1,215 @@
-body{
-  margin:0;
-  font-family:Roboto, sans-serif;
-  background:#0f172a;
-  color:#fff;
+* {
+    box-sizing: border-box;
 }
 
-.header{
-  padding:20px;
-  text-align:center;
-  border-bottom:1px solid rgba(255,255,255,.1);
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #0f172a;
+    color: #fff;
 }
 
-.container{
-  padding:30px;
+.header {
+    padding: 16px 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
 }
 
-.tabs{
-  text-align:center;
-  margin-bottom:30px;
+.header h1 {
+    margin: 0;
 }
 
-.tab{
-  padding:10px 20px;
-  border:none;
-  background:#032541;
-  color:#fff;
-  border-radius:6px;
-  cursor:pointer;
+.header input {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    font-size: 14px;
+    width: 260px;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:25px;
+.back-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
 }
 
-.card{
-  background:#fff;
-  color:#000;
-  border-radius:10px;
-  overflow:hidden;
-  position:relative;
-  transition:.3s;
+.back-link:hover {
+    color: #01b4e4;
 }
 
-.card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 25px rgba(0,0,0,.3);
+.container {
+    padding: 30px;
 }
 
-.card img{
-  width:100%;
-  display:block;
+.section-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
 }
 
-.card-body{
-  padding:10px;
+.section-head h2 {
+    margin: 0;
+    color: #01b4e4;
 }
 
-.card h3{
-  margin:0;
-  font-size:16px;
+select {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: #1e293b;
+    color: #fff;
+    cursor: pointer;
 }
 
-.card p{
-  margin:5px 0 0;
-  font-size:12px;
-  color:#555;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
 }
 
-.badge{
-  position:absolute;
-  bottom:10px;
-  right:10px;
-  background:#032541;
-  color:#fff;
-  border-radius:50%;
-  width:40px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
+.card {
+    background: #1e293b;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: transform .2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    display: block;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card-body h3 {
+    margin: 0;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-body p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: rgba(255,255,255,.5);
+}
+
+.badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #032541;
+    color: #01b4e4;
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.detail-hero {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.detail-poster {
+    width: 260px;
+    border-radius: 10px;
+}
+
+.detail-info h1 {
+    margin: 0 0 8px;
+}
+
+.detail-info .detail-date {
+    color: rgba(255,255,255,.5);
+}
+
+.detail-info .detail-note {
+    color: #01b4e4;
+    font-weight: bold;
+}
+
+.detail-info .detail-overview {
+    line-height: 1.7;
+    color: rgba(255,255,255,.8);
+}
+
+.genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.genre-tag {
+    border: 1px solid #01b4e4;
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-size: 12px;
+    color: #01b4e4;
+}
+
+.cast h2 {
+    color: #01b4e4;
+    margin-bottom: 20px;
+}
+
+.cast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 16px;
+}
+
+.actor-card {
+    text-align: center;
+}
+
+.actor-card img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 6px;
+}
+
+.actor-card p {
+    margin: 0;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.actor-card small {
+    color: rgba(255,255,255,.5);
+    font-size: 11px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 16px;
+    }
+
+    .detail-poster {
+        width: 100%;
+    }
 }
