@@ -1,96 +1,162 @@
-function buildGenres(genres) {
-    let html = "";
-    if (!genres) {
-        return html;
-    }
-    for (const g of genres) {
-        html += `<span class="genre-tag">${g.name}</span>`;
-    }
-    return html;
+function buildSingleGenreTag(genre) {
+  const html = `<span class="genre-tag">${genre.name}</span>`;
+  return html;
 }
 
-function buildCast(credits) {
-    let castItems = [];
-    if (credits && credits.cast) {
-        castItems = credits.cast.slice(0, 8);
-    }
+function buildGenreTagsHtml(genres) {
+  const genresExist = genres !== null && genres !== undefined;
+  const genresAreNotEmpty = genresExist && genres.length > 0;
 
-    let html = "";
-    for (const a of castItems) {
-        html += `
-            <div class="actor-card">
-                <img src="${api.poster(a.profile_path)}" alt="${a.name}">
-                <p>${a.name}</p>
-                <small>${a.character}</small>
-            </div>
-        `;
-    }
-    return html;
+  if (genresAreNotEmpty) {
+    const genreTagsArray = genres.map(buildSingleGenreTag);
+    const genreTagsHtml = genreTagsArray.join("");
+    return genreTagsHtml;
+  } else {
+    return "";
+  }
 }
 
-function renderDetail(app, data) {
-    let note = 0;
-    if (data.vote_average) {
-        note = Math.round(data.vote_average * 10);
-    }
+function buildSingleActorCard(actor) {
+  const photoUrl = api.getPosterUrl(actor.profile_path);
 
-    let date = "";
-    if (data.release_date) {
-        date = data.release_date.slice(0, 4);
-    }
+  const html = `
+    <div class="actor-card">
+      <img src="${photoUrl}" alt="${actor.name}">
+      <p>${actor.name}</p>
+      <small>${actor.character}</small>
+    </div>
+  `;
+  return html;
+}
 
-    let overview = data.overview;
-    if (!overview) {
-        overview = "Aucune description disponible.";
-    }
+function buildCastGridHtml(credits) {
+  const creditsExist = credits !== null && credits !== undefined;
+  const castExists = creditsExist && credits.cast !== undefined;
+  const castIsNotEmpty = castExists && credits.cast.length > 0;
 
-    const genres = buildGenres(data.genres);
-    const cast = buildCast(data.credits);
+  if (castIsNotEmpty) {
+    const mainCastMembers = credits.cast.slice(0, 8);
+    const actorCardsArray = mainCastMembers.map(buildSingleActorCard);
+    const actorCardsHtml = actorCardsArray.join("");
+    return actorCardsHtml;
+  } else {
+    return "";
+  }
+}
 
-    let castSection = "";
-    if (cast) {
-        castSection = `
-            <section class="cast">
-                <h2>Acteurs principaux</h2>
-                <div class="cast-grid">${cast}</div>
-            </section>
-        `;
-    }
+function buildCastSectionHtml(castGridHtml) {
+  const castGridIsNotEmpty = castGridHtml.length > 0;
 
-    app.innerHTML = `
-        <section class="detail-hero">
-            <img class="detail-poster" src="${api.poster(data.poster_path)}" alt="${data.title}">
-            <div class="detail-info">
-                <h1>${data.title}</h1>
-                <p class="detail-date">${date}</p>
-                <div class="genres">${genres}</div>
-                <p class="detail-note">Note : ${note}%</p>
-                <p class="detail-overview">${overview}</p>
-            </div>
-        </section>
-        ${castSection}
+  if (castGridIsNotEmpty) {
+    const html = `
+      <section class="cast">
+        <h2>Acteurs principaux</h2>
+        <div class="cast-grid">${castGridHtml}</div>
+      </section>
     `;
+    return html;
+  } else {
+    return "";
+  }
 }
 
-async function loadDetail(app, id) {
-    try {
-        const data = await api.movieDetail(id);
-        renderDetail(app, data);
-    } catch {
-        app.innerHTML = "<p>Erreur lors du chargement.</p>";
-    }
+function getRatingPercent(movie) {
+  const ratingExists = movie.vote_average !== null && movie.vote_average !== undefined;
+  const ratingIsPositive = ratingExists && movie.vote_average > 0;
+
+  if (ratingIsPositive) {
+    return Math.round(movie.vote_average * 10);
+  } else {
+    return 0;
+  }
+}
+
+function getReleaseYear(movie) {
+  const releaseDateExists =
+    movie.release_date !== null && movie.release_date !== undefined;
+  const releaseDateIsLongEnough = releaseDateExists && movie.release_date.length >= 4;
+
+  if (releaseDateIsLongEnough) {
+    return movie.release_date.slice(0, 4);
+  } else {
+    return "";
+  }
+}
+
+function getOverview(movie) {
+  const overviewExists = movie.overview !== null && movie.overview !== undefined;
+  const overviewIsNotEmpty = overviewExists && movie.overview.length > 0;
+
+  if (overviewIsNotEmpty) {
+    return movie.overview;
+  } else {
+    return "Aucune description disponible.";
+  }
+}
+
+function buildHeroSectionHtml(
+  movie,
+  ratingPercent,
+  releaseYear,
+  overview,
+  genreTagsHtml,
+) {
+  const posterUrl = api.getPosterUrl(movie.poster_path);
+
+  const html = `
+    <section class="detail-hero">
+      <img class="detail-poster" src="${posterUrl}" alt="${movie.title}">
+      <div class="detail-info">
+        <h1>${movie.title}</h1>
+        <p class="detail-date">${releaseYear}</p>
+        <div class="genres">${genreTagsHtml}</div>
+        <p class="detail-note">Note : ${ratingPercent}%</p>
+        <p class="detail-overview">${overview}</p>
+      </div>
+    </section>
+  `;
+  return html;
+}
+
+function renderMovieDetail(appContainer, movie) {
+  const ratingPercent = getRatingPercent(movie);
+  const releaseYear = getReleaseYear(movie);
+  const overview = getOverview(movie);
+  const genreTagsHtml = buildGenreTagsHtml(movie.genres);
+  const castGridHtml = buildCastGridHtml(movie.credits);
+  const heroSectionHtml = buildHeroSectionHtml(
+    movie,
+    ratingPercent,
+    releaseYear,
+    overview,
+    genreTagsHtml,
+  );
+  const castSectionHtml = buildCastSectionHtml(castGridHtml);
+
+  appContainer.innerHTML = heroSectionHtml + castSectionHtml;
+}
+
+async function loadAndDisplayMovie(appContainer, movieId) {
+  try {
+    const movieData = await api.getMovieDetail(movieId);
+    renderMovieDetail(appContainer, movieData);
+  } catch (error) {
+    appContainer.innerHTML = "<p>Impossible de charger les informations du film.</p>";
+  }
 }
 
 function initDetailPage() {
-    const app = document.getElementById("app");
-    const id = new URLSearchParams(window.location.search).get("id");
+  const appContainer = document.getElementById("app");
+  const urlParams = new URLSearchParams(window.location.search);
+  const movieId = urlParams.get("id");
 
-    if (!id) {
-        app.innerHTML = "<p>Introuvable.</p>";
-        return;
-    }
+  const movieIdIsMissing = movieId === null;
+  if (movieIdIsMissing) {
+    appContainer.innerHTML = "<p>Aucun film sélectionné.</p>";
+    return;
+  }
 
-    loadDetail(app, id);
+  loadAndDisplayMovie(appContainer, movieId);
 }
 
 initDetailPage();
