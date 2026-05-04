@@ -3,68 +3,55 @@ const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 const PLACEHOLDER_IMAGE = "https://via.placeholder.com/500x750?text=No+Image";
 
-async function apiFetch(endpoint, extraParams) {
-  if (extraParams === undefined) {
-    extraParams = {};
-  }
+async function apiFetch(endpoint, params = {}) {
+    const url = new URL(BASE_URL + endpoint);
+    url.searchParams.set("api_key", API_KEY);
+    url.searchParams.set("language", "fr-FR");
 
-  const fullUrl = new URL(BASE_URL + endpoint);
-  fullUrl.searchParams.set("api_key", API_KEY);
-  fullUrl.searchParams.set("language", "fr-FR");
+    for (const [key, value] of Object.entries(params)) {
+        url.searchParams.set(key, value);
+    }
 
-  const paramEntries = Object.entries(extraParams);
-  for (const [paramName, paramValue] of paramEntries) {
-    fullUrl.searchParams.set(paramName, paramValue);
-  }
+    const response = await fetch(url);
 
-  const response = await fetch(fullUrl);
+    if (!response.ok) {
+        throw new Error("Erreur API : " + response.status);
+    }
 
-  if (!response.ok) {
-    throw new Error("La requête vers l'API a échoué (statut " + response.status + ")");
-  }
-
-  const jsonData = await response.json();
-  return jsonData;
+    return response.json();
 }
 
 const api = {
-  getPopularMovies(genreId) {
-    if (genreId === undefined) {
-      genreId = "";
+    getTrendingMovies() {
+        return apiFetch("/trending/movie/week");
+    },
+
+    getPopularMovies(genreId = "") {
+        const params = { sort_by: "popularity.desc" };
+
+        if (genreId) {
+            params.with_genres = genreId;
+        }
+
+        return apiFetch("/discover/movie", params);
+    },
+
+    getMovieGenres() {
+        return apiFetch("/genre/movie/list");
+    },
+
+    getMovieDetail(movieId) {
+        return apiFetch("/movie/" + movieId, { append_to_response: "credits" });
+    },
+
+    searchMovies(query) {
+        return apiFetch("/search/movie", { query });
+    },
+
+    getPosterUrl(path) {
+        if (!path) {
+            return PLACEHOLDER_IMAGE;
+        }
+        return IMAGE_BASE_URL + path;
     }
-
-    const queryParams = { sort_by: "popularity.desc" };
-
-    const genreIdIsSpecified = genreId !== "";
-    if (genreIdIsSpecified) {
-      queryParams.with_genres = genreId;
-    }
-
-    return apiFetch("/discover/movie", queryParams);
-  },
-
-  getMovieGenres() {
-    return apiFetch("/genre/movie/list");
-  },
-
-  getMovieDetail(movieId) {
-    const queryParams = { append_to_response: "credits" };
-    return apiFetch("/movie/" + movieId, queryParams);
-  },
-
-  searchMovies(searchQuery) {
-    const queryParams = { query: searchQuery };
-    return apiFetch("/search/movie", queryParams);
-  },
-
-  getPosterUrl(posterPath) {
-    const posterPathExists =
-      posterPath !== null && posterPath !== undefined && posterPath.length > 0;
-
-    if (posterPathExists) {
-      return IMAGE_BASE_URL + posterPath;
-    } else {
-      return PLACEHOLDER_IMAGE;
-    }
-  },
 };
