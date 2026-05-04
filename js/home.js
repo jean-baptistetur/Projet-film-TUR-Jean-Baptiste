@@ -31,14 +31,23 @@ function buildMovieCard(movie) {
 
 async function loadTrendingMovies() {
     const grid = document.getElementById("movies-grid");
-    const response = await api.getTrendingMovies();
-    grid.innerHTML = response.results.map(m => buildMovieCard(m)).join("");
+
+    try {
+        const response = await api.getTrendingMovies();
+        grid.innerHTML = response.results.map(m => buildMovieCard(m)).join("");
+    } catch (error) {
+        grid.innerHTML = "<p>Erreur lors du chargement des tendances.</p>";
+    }
 }
 
 async function searchAndDisplay(query, container) {
-    const response = await api.searchMovies(query);
-    const results = response.results.slice(0, 10);
-    container.innerHTML = results.map(m => buildMovieCard(m)).join("");
+    try {
+        const response = await api.searchMovies(query);
+        const results = response.results.slice(0, 10);
+        container.innerHTML = results.map(m => buildMovieCard(m)).join("");
+    } catch (error) {
+        container.innerHTML = "<p>Erreur lors de la recherche.</p>";
+    }
 }
 
 function bindSearchEvent() {
