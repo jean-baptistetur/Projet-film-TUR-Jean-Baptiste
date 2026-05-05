@@ -26,11 +26,15 @@ const api = {
         return apiFetch("/trending/movie/week");
     },
 
-    getPopularMovies(genreId = "") {
+    getPopularMovies(genreId = "", year = "") {
         const params = { sort_by: "popularity.desc" };
 
         if (genreId) {
             params.with_genres = genreId;
+        }
+
+        if (year) {
+            params.primary_release_year = year;
         }
 
         return apiFetch("/discover/movie", params);
