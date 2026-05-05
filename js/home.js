@@ -1,83 +1,74 @@
-function getRatingPercent(movie) {
-    if (!movie.vote_average) {
-        return 0;
+class HomePage {
+    constructor() {
+        this.trendingGrid = document.getElementById("movies-grid");
+        this.searchInput = document.getElementById("search-input");
+        this.searchResults = document.getElementById("search-results");
+        this.discoverSection = document.getElementById("discover-section");
+        this.init();
     }
-    return Math.round(movie.vote_average * 10);
-}
 
-function getReleaseYear(movie) {
-    if (!movie.release_date) {
-        return "";
+    async init() {
+        await this.loadTrendingMovies();
+        this.bindEvents();
     }
-    return movie.release_date.slice(0, 4);
-}
 
-function buildMovieCard(movie) {
-    const rating = getRatingPercent(movie);
-    const year = getReleaseYear(movie);
-    const poster = api.getPosterUrl(movie.poster_path);
+    buildMovieCard(movie) {
+        const rating = movie.vote_average ? Math.round(movie.vote_average * 10) : 0;
+        const year = movie.release_date ? movie.release_date.slice(0, 4) : "";
+        const poster = api.getPosterUrl(movie.poster_path);
 
-    return `
-        <a href="detail.html?id=${movie.id}" class="card">
-            <img src="${poster}" alt="${movie.title}" loading="lazy">
-            <div class="card-body">
-                <h3>${movie.title}</h3>
-                <p>${year}</p>
-            </div>
-            <div class="badge">${rating}%</div>
-        </a>
-    `;
-}
-
-async function loadTrendingMovies() {
-    const grid = document.getElementById("movies-grid");
-
-    try {
-        const response = await api.getTrendingMovies();
-        grid.innerHTML = response.results.map(m => buildMovieCard(m)).join("");
-    } catch (error) {
-        grid.innerHTML = "<p>Erreur lors du chargement des tendances.</p>";
+        return `
+            <a href="detail.html?id=${movie.id}" class="card">
+                <img src="${poster}" alt="${movie.title}" loading="lazy">
+                <div class="card-body">
+                    <h3>${movie.title}</h3>
+                    <p>${year}</p>
+                </div>
+                <div class="badge">${rating}%</div>
+            </a>
+        `;
     }
-}
 
-async function searchAndDisplay(query, container) {
-    try {
-        const response = await api.searchMovies(query);
-        const results = response.results.slice(0, 10);
-        container.innerHTML = results.map(m => buildMovieCard(m)).join("");
-    } catch (error) {
-        container.innerHTML = "<p>Erreur lors de la recherche.</p>";
-    }
-}
-
-function bindSearchEvent() {
-    const input = document.getElementById("search-input");
-    const resultsContainer = document.getElementById("search-results");
-    const discoverSection = document.getElementById("discover-section");
-    let timer;
-
-    input.addEventListener("input", function () {
-        clearTimeout(timer);
-
-        const query = this.value.trim();
-
-        if (!query) {
-            resultsContainer.innerHTML = "";
-            discoverSection.style.display = "";
-            return;
+    async loadTrendingMovies() {
+        try {
+            const response = await api.getTrendingMovies();
+            this.trendingGrid.innerHTML = response.results.map(m => this.buildMovieCard(m)).join("");
+        } catch (error) {
+            this.trendingGrid.innerHTML = "<p>Erreur lors du chargement des tendances.</p>";
         }
+    }
 
-        discoverSection.style.display = "none";
+    async searchAndDisplay(query) {
+        try {
+            const response = await api.searchMovies(query);
+            const results = response.results.slice(0, 10);
+            this.searchResults.innerHTML = results.map(m => this.buildMovieCard(m)).join("");
+        } catch (error) {
+            this.searchResults.innerHTML = "<p>Erreur lors de la recherche.</p>";
+        }
+    }
 
-        timer = setTimeout(function () {
-            searchAndDisplay(query, resultsContainer);
-        }, 400);
-    });
+    bindEvents() {
+        let timer;
+
+        this.searchInput.addEventListener("input", () => {
+            clearTimeout(timer);
+
+            const query = this.searchInput.value.trim();
+
+            if (!query) {
+                this.searchResults.innerHTML = "";
+                this.discoverSection.style.display = "";
+                return;
+            }
+
+            this.discoverSection.style.display = "none";
+
+            timer = setTimeout(() => {
+                this.searchAndDisplay(query);
+            }, 400);
+        });
+    }
 }
 
-async function initHomePage() {
-    await loadTrendingMovies();
-    bindSearchEvent();
-}
-
-initHomePage();
+new HomePage();
