@@ -15,30 +15,30 @@ body {
     align-items: center;
     gap: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-.header h1 {
-    margin: 0;
-}
+    & h1 {
+        margin: 0;
+    }
 
-.header input {
-    padding: 8px 14px;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-    font-size: 14px;
-    width: 260px;
+    & input {
+        padding: 8px 14px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        font-size: 14px;
+        width: 260px;
+    }
 }
 
 .back-link {
     color: #fff;
     text-decoration: none;
     font-size: 15px;
-}
 
-.back-link:hover {
-    color: #01b4e4;
+    &:hover {
+        color: #01b4e4;
+    }
 }
 
 .container {
@@ -50,11 +50,11 @@ body {
     align-items: center;
     gap: 16px;
     margin-bottom: 20px;
-}
 
-.section-head h2 {
-    margin: 0;
-    color: #01b4e4;
+    & h2 {
+        margin: 0;
+        color: #01b4e4;
+    }
 }
 
 select {
@@ -94,35 +94,35 @@ select {
     display: block;
     transition: transform 0.2s;
     animation: fadeInUp 0.4s ease both;
-}
 
-.card:hover {
-    transform: translateY(-5px);
-}
+    &:hover {
+        transform: translateY(-5px);
+    }
 
-.card img {
-    width: 100%;
-    aspect-ratio: 2/3;
-    object-fit: cover;
-    display: block;
-}
+    & img {
+        width: 100%;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+        display: block;
+    }
 
-.card-body {
-    padding: 10px;
-}
+    & .card-body {
+        padding: 10px;
 
-.card-body h3 {
-    margin: 0;
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+        & h3 {
+            margin: 0;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-.card-body p {
-    margin: 4px 0 0;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
+        & p {
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
 }
 
 .badge {
@@ -149,22 +149,24 @@ select {
     border-radius: 10px;
 }
 
-.detail-info h1 {
-    margin: 0 0 8px;
-}
+.detail-info {
+    & h1 {
+        margin: 0 0 8px;
+    }
 
-.detail-info .detail-date {
-    color: rgba(255, 255, 255, 0.5);
-}
+    & .detail-date {
+        color: rgba(255, 255, 255, 0.5);
+    }
 
-.detail-info .detail-note {
-    color: #01b4e4;
-    font-weight: bold;
-}
+    & .detail-note {
+        color: #01b4e4;
+        font-weight: bold;
+    }
 
-.detail-info .detail-overview {
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.8);
+    & .detail-overview {
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.8);
+    }
 }
 
 .genres {
@@ -182,38 +184,40 @@ select {
     color: #01b4e4;
 }
 
-.cast h2 {
-    color: #01b4e4;
-    margin-bottom: 20px;
-}
+.cast {
+    & h2 {
+        color: #01b4e4;
+        margin-bottom: 20px;
+    }
 
-.cast-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 16px;
+    & .cast-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 16px;
+    }
 }
 
 .actor-card {
     text-align: center;
-}
 
-.actor-card img {
-    width: 100%;
-    aspect-ratio: 2/3;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 6px;
-}
+    & img {
+        width: 100%;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 6px;
+    }
 
-.actor-card p {
-    margin: 0;
-    font-size: 13px;
-    font-weight: bold;
-}
+    & p {
+        margin: 0;
+        font-size: 13px;
+        font-weight: bold;
+    }
 
-.actor-card small {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 11px;
+    & small {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 11px;
+    }
 }
 
 @media (max-width: 600px) {
