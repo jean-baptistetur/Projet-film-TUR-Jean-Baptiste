@@ -44,6 +44,24 @@ const api = {
         return apiFetch("/genre/movie/list");
     },
 
+    getPopularSeries(genreId = "", year = "") {
+        const params = { sort_by: "popularity.desc" };
+
+        if (genreId) {
+            params.with_genres = genreId;
+        }
+
+        if (year) {
+            params.first_air_date_year = year;
+        }
+
+        return apiFetch("/discover/tv", params);
+    },
+
+    getSeriesGenres() {
+        return apiFetch("/genre/tv/list");
+    },
+
     getMovieDetail(movieId) {
         return apiFetch("/movie/" + movieId, { append_to_response: "credits" });
     },

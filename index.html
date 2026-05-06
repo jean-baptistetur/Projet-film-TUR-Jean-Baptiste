@@ -3,17 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CinéScope - Découvrez les films tendances et explorez le catalogue par genre et par année." />
     <title>CinéScope</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
     <header class="header">
-      <h1><i class="fa-solid fa-film"></i> CinéScope</h1>
-      <input type="text" id="search-input" placeholder="Rechercher un film..." />
+      <h1><i class="fa-solid fa-film" aria-hidden="true"></i> CinéScope</h1>
+      <input type="text" id="search-input" placeholder="Rechercher un film..." aria-label="Rechercher un film" />
     </header>
     <main class="container">
-      <div id="search-results" class="grid"></div>
+      <div id="search-results" class="grid" aria-live="polite"></div>
       <section id="discover-section">
         <div class="section-head">
           <h2>Tendances</h2>
@@ -23,14 +24,30 @@
       <section id="films-section">
         <div class="section-head">
           <h2>Films</h2>
+          <label for="films-genre" class="sr-only">Genre</label>
           <select id="films-genre">
             <option value="">Tous les genres</option>
           </select>
+          <label for="films-year" class="sr-only">Année</label>
           <select id="films-year">
             <option value="">Toutes les années</option>
           </select>
         </div>
         <div id="films-grid" class="grid"></div>
+      </section>
+      <section id="series-section">
+        <div class="section-head">
+          <h2>Séries</h2>
+          <label for="series-genre" class="sr-only">Genre</label>
+          <select id="series-genre">
+            <option value="">Tous les genres</option>
+          </select>
+          <label for="series-year" class="sr-only">Année</label>
+          <select id="series-year">
+            <option value="">Toutes les années</option>
+          </select>
+        </div>
+        <div id="series-grid" class="grid"></div>
       </section>
     </main>
     <script src="js/api.js"></script>
