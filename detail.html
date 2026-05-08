@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Détail</title>
+    <meta name="description" content="CinéScope - Détail du film" />
+    <title>CinéScope - Détail</title>
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
@@ -12,11 +13,11 @@
   </head>
   <body>
     <header class="header">
-      <a href="index.html" class="back-link"
-        ><i class="fa-solid fa-arrow-left"></i> Retour</a
-      >
+      <a href="index.html" class="back-link">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Retour
+      </a>
     </header>
-    <main id="app" class="container"></main>
+    <main id="app" class="container" aria-live="polite"></main>
     <script src="js/api.js"></script>
     <script src="js/detail.js"></script>
   </body>
