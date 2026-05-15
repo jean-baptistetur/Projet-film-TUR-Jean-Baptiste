@@ -1,14 +1,19 @@
 class HomePage {
   constructor() {
+    // grilles
     this.trendingGrid = document.getElementById("movies-grid");
     this.filmsGrid = document.getElementById("films-grid");
+    this.seriesGrid = document.getElementById("series-grid");
+    // filtres films
     this.filmsGenreSelect = document.getElementById("films-genre");
     this.filmsYearSelect = document.getElementById("films-year");
-    this.seriesGrid = document.getElementById("series-grid");
+    // filtres séries
     this.seriesGenreSelect = document.getElementById("series-genre");
     this.seriesYearSelect = document.getElementById("series-year");
+    // recherche
     this.searchInput = document.getElementById("search-input");
     this.searchResults = document.getElementById("search-results");
+    // sections à masquer pendant la recherche
     this.discoverSection = document.getElementById("discover-section");
     this.filmsSection = document.getElementById("films-section");
     this.seriesSection = document.getElementById("series-section");
@@ -26,23 +31,26 @@ class HomePage {
     this.bindEvents();
   }
 
+  // carte commune films et séries
   buildCard(item) {
     const rating = item.vote_average ? Math.round(item.vote_average * 10) : 0;
+    // title = film, name = série
     const title = item.title || item.name;
+    // release_date = film, first_air_date = série
     const date = item.release_date || item.first_air_date;
     const year = date ? date.slice(0, 4) : "";
     const poster = api.getPosterUrl(item.poster_path);
 
     return `
-            <a href="detail.html?id=${item.id}" class="card">
-                <img src="${poster}" alt="${title}" loading="lazy">
-                <div class="card-body">
-                    <h3>${title}</h3>
-                    <p>${year}</p>
-                </div>
-                <div class="badge">${rating}%</div>
-            </a>
-        `;
+      <a href="detail.html?id=${item.id}" class="card">
+        <img src="${poster}" alt="${title}" loading="lazy">
+        <div class="card-body">
+          <h3>${title}</h3>
+          <p>${year}</p>
+        </div>
+        <div class="badge">${rating}%</div>
+      </a>
+    `;
   }
 
   async loadTrendingMovies() {
@@ -80,6 +88,7 @@ class HomePage {
     }
   }
 
+  // options dynamiques depuis l'API
   async populateFilmsGenres() {
     try {
       const response = await api.getMovieGenres();
@@ -90,7 +99,7 @@ class HomePage {
         this.filmsGenreSelect.appendChild(option);
       }
     } catch (error) {
-      // le select reste avec l'option par défaut
+      // select reste avec l'option par défaut
     }
   }
 
@@ -104,10 +113,11 @@ class HomePage {
         this.seriesGenreSelect.appendChild(option);
       }
     } catch (error) {
-      // le select reste avec l'option par défaut
+      // select reste avec l'option par défaut
     }
   }
 
+  // de l'année courante jusqu'à 1990
   populateYears(select) {
     const currentYear = new Date().getFullYear();
     for (let year = currentYear; year >= 1990; year--) {
@@ -121,6 +131,7 @@ class HomePage {
   async searchAndDisplay(query) {
     try {
       const response = await api.searchMovies(query);
+      // max 10 résultats
       const results = response.results.slice(0, 10);
       this.searchResults.innerHTML = results.map((m) => this.buildCard(m)).join("");
     } catch (error) {
@@ -141,7 +152,8 @@ class HomePage {
 
       const query = this.searchInput.value.trim();
 
-      if (!query) {
+      // champ vide : réaffiche les sections
+      if (query===false) {
         this.searchResults.innerHTML = "";
         this.discoverSection.style.display = "";
         this.filmsSection.style.display = "";
@@ -149,10 +161,12 @@ class HomePage {
         return;
       }
 
+      // masque les sections pendant la recherche
       this.discoverSection.style.display = "none";
       this.filmsSection.style.display = "none";
       this.seriesSection.style.display = "none";
 
+      // attente 400ms avant de lancer la recherche
       timer = setTimeout(() => {
         this.searchAndDisplay(query);
       }, 400);
@@ -160,4 +174,4 @@ class HomePage {
   }
 }
 
-new HomePage();
+const homePage = new HomePage();

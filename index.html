@@ -1,37 +1,32 @@
 <!doctype html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="CinéScope - Découvrez les films tendances et explorez le catalogue par genre et par année."
-    />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CinéScope - Découvrez les films tendances et explorez le catalogue par genre et par année.">
     <title>CinéScope</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
   <body>
     <header class="header">
       <h1><i class="fa-solid fa-film" aria-hidden="true"></i> CinéScope</h1>
-      <input
-        type="text"
-        id="search-input"
-        placeholder="Rechercher un film..."
-        aria-label="Rechercher un film"
-      />
+      <!-- recherche -->
+      <input type="text" id="search-input" placeholder="Rechercher un film..." aria-label="Rechercher un film">
     </header>
     <main class="container">
+      <!-- résultats de recherche -->
       <div id="search-results" class="grid" aria-live="polite"></div>
+
+      <!-- tendances -->
       <section id="discover-section">
         <div class="section-head">
           <h2>Tendances</h2>
         </div>
         <div id="movies-grid" class="grid"></div>
       </section>
+
+      <!-- films + filtres -->
       <section id="films-section">
         <div class="section-head">
           <h2>Films</h2>
@@ -46,6 +41,8 @@
         </div>
         <div id="films-grid" class="grid"></div>
       </section>
+
+      <!-- séries + filtres -->
       <section id="series-section">
         <div class="section-head">
           <h2>Séries</h2>

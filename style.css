@@ -9,6 +9,7 @@ body {
   color: #fff;
 }
 
+/* ---- header ---- */
 .header {
   padding: 16px 30px;
   display: flex;
@@ -41,6 +42,7 @@ body {
   color: #01b4e4;
 }
 
+/* ---- layout ---- */
 .container {
   padding: 30px;
 }
@@ -66,6 +68,7 @@ select {
   cursor: pointer;
 }
 
+/* grille responsive automatique */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -73,18 +76,19 @@ select {
   margin-bottom: 40px;
 }
 
-/* Définition de l'animation */
+/* ---- animation ---- */
 @keyframes fadeInUp {
   from {
-    opacity: 0;              /* invisible au départ */
+    opacity: 0; /* invisible au départ */
     transform: translateY(20px); /* décalé 20px vers le bas */
   }
   to {
-    opacity: 1;              /* complètement visible */
-    transform: translateY(0); /* à sa position normale */
+    opacity: 1; /* complètement visible */
+    transform: translateY(0); /* position normale */
   }
 }
 
+/* ---- carte ---- */
 .card {
   background: #1e293b;
   border-radius: 10px;
@@ -94,7 +98,8 @@ select {
   color: #fff;
   display: block;
   transition: transform 0.2s;
-  animation: fadeInUp 0.4s ease both; /* durée : 0.4s | vitesse progressive : ease  | applique les styles dès le début : both */
+  /* durée : 0.4s | ease : progressif | both : applique dès le départ */
+  animation: fadeInUp 0.4s ease both;
 }
 
 .card:hover {
@@ -126,6 +131,7 @@ select {
   color: rgba(255, 255, 255, 0.5);
 }
 
+/* note en badge absolu */
 .badge {
   position: absolute;
   top: 8px;
@@ -138,6 +144,7 @@ select {
   font-weight: bold;
 }
 
+/* ---- page détail ---- */
 .detail-hero {
   display: flex;
   gap: 40px;
@@ -183,6 +190,7 @@ select {
   color: #01b4e4;
 }
 
+/* ---- casting ---- */
 .cast h2 {
   color: #01b4e4;
   margin-bottom: 20px;
@@ -217,6 +225,7 @@ select {
   font-size: 11px;
 }
 
+/* label accessible masqué visuellement */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -226,12 +235,52 @@ select {
   white-space: nowrap;
 }
 
-@media (max-width: 600px) {
+/* ---- responsive ---- */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+  }
+
+  .header input {
+    width: 100%;
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-head select {
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
   .container {
     padding: 16px;
   }
 
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+  }
+
   .detail-poster {
     width: 100%;
+  }
+
+  .detail-hero {
+    gap: 20px;
+  }
+
+  .cast-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   }
 }

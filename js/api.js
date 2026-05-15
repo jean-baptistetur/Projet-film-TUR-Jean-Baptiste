@@ -1,8 +1,10 @@
+// clé + URLs de base
 const API_KEY = "6cf360749e015306dfd4bcf5ccefccee";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 const PLACEHOLDER_IMAGE = "https://via.placeholder.com/500x750?text=No+Image";
 
+// requête générique
 async function apiFetch(endpoint, params = {}) {
   const url = new URL(BASE_URL + endpoint);
   url.searchParams.set("api_key", API_KEY);
@@ -14,7 +16,7 @@ async function apiFetch(endpoint, params = {}) {
 
   const response = await fetch(url);
 
-  if (!response.ok) {
+  if (response.ok === false) {
     throw new Error("Erreur API : " + response.status);
   }
 
@@ -22,10 +24,12 @@ async function apiFetch(endpoint, params = {}) {
 }
 
 const api = {
+  // tendances de la semaine
   getTrendingMovies() {
     return apiFetch("/trending/movie/week");
   },
 
+  // films par popularité + filtres
   getPopularMovies(genreId = "", year = "") {
     const params = { sort_by: "popularity.desc" };
 
@@ -40,10 +44,12 @@ const api = {
     return apiFetch("/discover/movie", params);
   },
 
+  // genres films
   getMovieGenres() {
     return apiFetch("/genre/movie/list");
   },
 
+  // séries par popularité + filtres
   getPopularSeries(genreId = "", year = "") {
     const params = { sort_by: "popularity.desc" };
 
@@ -58,20 +64,24 @@ const api = {
     return apiFetch("/discover/tv", params);
   },
 
+  // genres séries
   getSeriesGenres() {
     return apiFetch("/genre/tv/list");
   },
 
+  // détail film + casting
   getMovieDetail(movieId) {
     return apiFetch("/movie/" + movieId, { append_to_response: "credits" });
   },
 
+  // recherche
   searchMovies(query) {
     return apiFetch("/search/movie", { query });
   },
 
+  // image ou placeholder
   getPosterUrl(path) {
-    if (!path) {
+    if (path === false) {
       return PLACEHOLDER_IMAGE;
     }
     return IMAGE_BASE_URL + path;
