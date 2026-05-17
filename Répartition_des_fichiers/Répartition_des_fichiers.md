@@ -6,6 +6,8 @@ Résumé simple de l'utilité des fichiers :
 
 - style.css ==> mise en forme de toutes les pages
 
+- js/config.js ==> clé API TMDB isolée
+
 - js/api.js ==> communication avec l'API TMDB
 
 - js/home.js ==> logique de la page d'accueil
@@ -19,6 +21,8 @@ Répartition des fichiers en fonction des consignes :
 - detail.html ==> balises sémantiques (header, main), validation W3C HTML
 
 - style.css ==> animation CSS (@keyframes fadeInUp sur .card), responsive (tablette 768px / mobile 480px), validation W3C CSS
+
+- js/config.js ==> isolation de la clé API (bonne pratique de séparation de configuration)
 
 - js/api.js ==> texte en français (language: fr-FR), listing tendances (getTrendingMovies), listing films (getPopularMovies), listing séries (getPopularSeries), filtres dynamiques genres films (getMovieGenres), filtres dynamiques genres séries (getSeriesGenres), images par défaut (getPosterUrl)
 

@@ -1,5 +1,5 @@
 // clé + URLs de base
-const API_KEY = "6cf360749e015306dfd4bcf5ccefccee";
+const API_KEY = CONFIG.API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 const PLACEHOLDER_IMAGE = "https://via.placeholder.com/500x750?text=No+Image";
@@ -16,7 +16,7 @@ async function apiFetch(endpoint, params = {}) {
 
   const response = await fetch(url);
 
-  if (response.ok === false) {
+  if (!response.ok) {
     throw new Error("Erreur API : " + response.status);
   }
 
@@ -81,7 +81,7 @@ const api = {
 
   // image ou placeholder
   getPosterUrl(path) {
-    if (path === false) {
+    if (!path) {
       return PLACEHOLDER_IMAGE;
     }
     return IMAGE_BASE_URL + path;

@@ -153,7 +153,7 @@ class HomePage {
       const query = this.searchInput.value.trim();
 
       // champ vide : réaffiche les sections
-      if (query===false) {
+      if (!query) {
         this.searchResults.innerHTML = "";
         this.discoverSection.style.display = "";
         this.filmsSection.style.display = "";

@@ -4,7 +4,7 @@ class DetailPage {
     // récupère l'id dans l'URL
     const movieId = new URLSearchParams(window.location.search).get("id");
 
-    if (movieId === false) {
+    if (!movieId) {
       this.container.innerHTML = "<p>Aucun film sélectionné.</p>";
       return;
     }
