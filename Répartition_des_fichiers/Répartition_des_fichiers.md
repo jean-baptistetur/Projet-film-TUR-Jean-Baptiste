@@ -12,16 +12,13 @@ Résumé simple de l'utilité des fichiers :
 
 - js/detail.js ==> logique de la page de détail
 
-
-
-
 Répartition des fichiers en fonction des consignes :
 
 - index.html ==> balises sémantiques (header, main, section), validation W3C HTML
 
 - detail.html ==> balises sémantiques (header, main), validation W3C HTML
 
-- style.css ==> animation CSS (@keyframes fadeInUp sur .card), validation W3C CSS
+- style.css ==> animation CSS (@keyframes fadeInUp sur .card), responsive (tablette 768px / mobile 480px), validation W3C CSS
 
 - js/api.js ==> texte en français (language: fr-FR), listing tendances (getTrendingMovies), listing films (getPopularMovies), listing séries (getPopularSeries), filtres dynamiques genres films (getMovieGenres), filtres dynamiques genres séries (getSeriesGenres), images par défaut (getPosterUrl)
 
