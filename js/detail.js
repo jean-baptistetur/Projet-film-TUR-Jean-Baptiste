@@ -54,6 +54,7 @@ class DetailPage {
   }
 
   render(movie) {
+    document.title = "CinéScope - " + movie.title;
     // note sur 100
     const rating = movie.vote_average ? Math.round(movie.vote_average * 10) : 0;
     // année uniquement
