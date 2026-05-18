@@ -17,6 +17,13 @@
     </header>
     <!-- contenu injecté par detail.js -->
     <main id="app" class="container" aria-live="polite"></main>
+    <!-- footer + année dynamique -->
+    <footer class="footer">
+      <p>TUR Jean-Baptiste <span id="year"></span></p>
+      <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+      </script>
+    </footer>
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/detail.js"></script>
